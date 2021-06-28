@@ -34,15 +34,12 @@ public class FragmentLiveGames extends DaggerFragment {
     @Inject
     ViewModelFactory viewModelFactory;
 
-
-
     public static FragmentLiveGames newInstance() {
         return new FragmentLiveGames();
     }
 
     FragmentLiveGamesBinding fragmentLiveGamesBinding;
     LiveGamesViewModel viewModel;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

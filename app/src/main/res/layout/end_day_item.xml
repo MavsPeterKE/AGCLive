@@ -30,7 +30,7 @@
             android:textSize="13sp"
             android:maxLines="1"
             android:textColor="@color/white"
-            android:text="@{endDay.endOfDayTime}"
+            android:text="@{viewmodel.getEndDayDate(endDay.endOfDayTime)}"
             android:ellipsize="end"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -43,7 +43,7 @@
             android:layout_height="0dp"
             android:layout_marginEnd="16dp"
             android:gravity="center_vertical"
-            android:text="@{`KES. ` +endDay.totalSales +`0`}"
+            android:text="@{endDay.totalSales +`0`}"
             android:textColor="@color/green_progress"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView11"
@@ -56,12 +56,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{endDay.endOfDayTime}"
+            android:text="@{viewmodel.getEndDayTimeDetail(endDay.endOfDayTime)}"
             android:textColor="@color/light_white"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@+id/textView6"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            tools:text="Thur" />
+            tools:text="Thur at 11.00PM" />
 
         <View
             android:id="@+id/view2"
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@{endDay.totalGamesPlayed+` Games Played`}"
+            android:text="@{endDay.totalGamesPlayed}"
             android:textColor="@color/light_white"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@+id/view2"
@@ -98,11 +98,9 @@
 
         <TextView
             android:id="@+id/textView12"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:text="@{endDay.issues}"
             android:textColor="@color/light_white"
             android:textSize="13sp"

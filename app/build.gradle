@@ -72,7 +72,8 @@ dependencies {
     implementation 'com.annimon:stream:1.2.1'
 
     //Bottom navigation
-   // implementation 'com.eightbitlab:bottomnavigationbar:0.9.6'
+    //implementation 'com.eightbitlab:bottomnavigationbar:0.9.6'
+   // implementation "com.aurelhubert:ahbottomnavigation:2.3.4"
 
     /* Butter knife Binding Library for initializes ui components*/
     implementation 'com.jakewharton:butterknife:10.1.0'
@@ -102,4 +103,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
 
     implementation 'com.ctrlplusz.anytextview:library:1.2'
+
+    implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
+
 }
