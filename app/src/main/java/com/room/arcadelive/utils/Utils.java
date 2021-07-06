@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,11 @@ public class Utils {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(c);
+    }
+
+    public static String getDateString(String format, Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        return dateFormat.format(date);
     }
 
     public static int getSeconds(String time) {
@@ -40,5 +46,15 @@ public class Utils {
                 return null;
             }
         }
+    }
+
+    public static String getRandomId() {
+        String randomId = "";
+        try{
+            randomId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        }catch (Exception e){
+
+        }
+        return randomId;
     }
 }

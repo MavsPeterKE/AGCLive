@@ -16,5 +16,6 @@
     <color name="grey">#C4C4C4</color>
     <color name="light_grey">#DCDCDC</color>
     <color name="transluscent_white">#fff</color>
+    <color name="cool_green">#388E3C</color>
     <color name="green_progress">#7CFC00</color>
 </resources>

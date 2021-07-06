@@ -1,68 +1,82 @@
-package com.room.arcadelive.view.activity;
+package com.room.arcadelive.view.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.databinding.ObservableField;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.room.arcadelive.R;
+import com.room.arcadelive.databinding.FragmentHomeBinding;
 import com.room.arcadelive.models.CompletedGame;
 import com.room.arcadelive.utils.Constants;
 import com.room.arcadelive.utils.Utils;
+import com.room.arcadelive.utils.ViewModelFactory;
 import com.room.arcadelive.view.adapters.TabsFragmentAdapter;
-import com.room.arcadelive.view.fragments.FragmentCompletedGames;
-import com.room.arcadelive.view.fragments.FragmentEndDays;
-import com.room.arcadelive.view.fragments.FragmentLiveGames;
+import com.room.arcadelive.viewmodels.HomeViewModel;
 
 import java.util.Date;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import dagger.android.support.DaggerAppCompatActivity;
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
 
 import static com.room.arcadelive.utils.Constants.DEFAULT_USER;
 
-public class MainActivity extends DaggerAppCompatActivity {
-    @BindView(R.id.tab)
-    TabLayout tabLayout;
 
-    @BindView(R.id.indicator)
-    View mIndicator;
+public class FragmentHome extends DaggerFragment {
+    @Inject
+    ViewModelFactory viewModelFactory;
 
-    @BindView(R.id.viewPager)
-    ViewPager mViewPager;
+    public static FragmentHome newInstance() {
+        return new FragmentHome();
+    }
 
-    @BindView(R.id.tvAmount)
-    TextView tvTotals;
+    FragmentHomeBinding fragmentEndDaysBinding;
+    HomeViewModel homeViewModel;
+
+    private TabLayout tabLayout;
+    private View mIndicator;
+    private ViewPager mViewPager;
+    private TextView tvTotals;
 
     private int indicatorWidth;
     FirebaseDatabase firebaseDatabase;
 
-    public ObservableField<String> observableField = new ObservableField<>("2021-06-24");
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_home);
-        ButterKnife.bind(this);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        homeViewModel = new ViewModelProvider(this, viewModelFactory).get(HomeViewModel.class);
+        fragmentEndDaysBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        fragmentEndDaysBinding.executePendingBindings();
+
+        tabLayout = fragmentEndDaysBinding.tab;
+        mIndicator = fragmentEndDaysBinding.indicator;
+        mViewPager = fragmentEndDaysBinding.viewPager;
+        tvTotals = fragmentEndDaysBinding.tvAmount;
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         observeCompletedGames();
-        TabsFragmentAdapter tabsFragmentAdapter = new TabsFragmentAdapter(getSupportFragmentManager());
+        TabsFragmentAdapter tabsFragmentAdapter = new TabsFragmentAdapter(getActivity().getSupportFragmentManager());
         tabsFragmentAdapter.addFragment(FragmentLiveGames.newInstance(), "Screens");
         tabsFragmentAdapter.addFragment(FragmentCompletedGames.newInstance(), "Games");
-        tabsFragmentAdapter.addFragment(FragmentEndDays.newInstance(), "End Day");
+        tabsFragmentAdapter.addFragment(FragmentEndDays.newInstance(), "End Days");
 
         mViewPager.setAdapter(tabsFragmentAdapter);
         tabLayout.setupWithViewPager(mViewPager);
@@ -104,61 +118,17 @@ public class MainActivity extends DaggerAppCompatActivity {
             }
         });
 
-        // search();
-
-    }
-
-    public void search() {
-        Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT), Constants.DATE_FORMAT);
-        String monthString = (String) DateFormat.format("MMM", todayDate); // Jun
-        String year = (String) DateFormat.format("yyyy", todayDate); // 2013
-        firebaseDatabase.getReference(DEFAULT_USER)
-                .child("gamelogs")
-                .child("all-completed-Games")
-                .child(monthString + "_" + year)
-                .orderByKey().equalTo("2021-06-25").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                double totalRevenue = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    CompletedGame completedGame = snapshot.getValue(CompletedGame.class);
-                    totalRevenue += completedGame.payableAmount;
-                }
-
-                setTotalRevenue(totalRevenue);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                int x = 0;
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                int x = 0;
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                int x = 0;
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                int x = 0;
-            }
-        });
-
+        return fragmentEndDaysBinding.getRoot();
     }
 
     private void observeCompletedGames() {
-        Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT), Constants.DATE_FORMAT);
-        String monthString = (String) DateFormat.format("MMM", todayDate); // Jun
-        String year = (String) DateFormat.format("yyyy", todayDate); // 2013
+        Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT),Constants.DATE_FORMAT);
+        String monthString  = (String) DateFormat.format("MMM",  todayDate); // Jun
+        String year         = (String) DateFormat.format("yyyy", todayDate); // 2013
         DatabaseReference myRef = firebaseDatabase.getReference(DEFAULT_USER)
                 .child("gamelogs")
                 .child("all-completed-Games")
-                .child(monthString + "_" + year)
+                .child(monthString+"_"+year)
                 .child(Utils.getTodayDate(Constants.DATE_FORMAT));
 
         // Read from the database
@@ -166,9 +136,9 @@ public class MainActivity extends DaggerAppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 double totalRevenue = 0;
-                for (DataSnapshot gameModel : dataSnapshot.getChildren()) {
+                for(DataSnapshot gameModel : dataSnapshot.getChildren()) {
                     CompletedGame completedGame = gameModel.getValue(CompletedGame.class);
-                    totalRevenue += completedGame.payableAmount;
+                    totalRevenue+=completedGame.payableAmount;
                 }
 
                 setTotalRevenue(totalRevenue);
@@ -185,8 +155,6 @@ public class MainActivity extends DaggerAppCompatActivity {
     }
 
     private void setTotalRevenue(double totalRevenue) {
-        tvTotals.setText("KES " + totalRevenue + "0");
+        tvTotals.setText("KES "+ totalRevenue +"0");
     }
-
 }
-

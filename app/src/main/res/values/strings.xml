@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ArcadeLive</string>
+    <string name="title_home">Sales</string>
+    <string name="title_screen">Expenses</string>
+    <string name="title_gamers">customers</string>
+    <string name="title_eod">Revenue</string>
 </resources>

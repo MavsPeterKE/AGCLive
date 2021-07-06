@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.room.arcadelive.viewmodels.RevenueViewModel" />
+    </data>
+
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_black"
+    tools:context=".view.activity.MainActivity">
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_rectangular_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_goneMarginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="93dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="Total Revenue"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/view4"
+        app:layout_constraintTop_toTopOf="@+id/view4" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@{`KES ` +viewmodel.revenueField+'0'}"
+        android:textColor="@color/green_progress"
+        android:textSize="28dp"
+        tools:text="KES 24,000.00"
+        app:layout_constraintStart_toStartOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Total Sales this month:"
+        android:textSize="14sp"
+        android:textColor="@color/light_white"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Total expenses is :"
+        android:textSize="14sp"
+        android:textColor="@color/light_white"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{`kes ` +viewmodel.totalExpensesField+`0`}"
+        android:textSize="14sp"
+        android:textColor="@color/holo_red_dark"
+        tools:text="KES 24,000.00"
+        app:layout_constraintEnd_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{`kes ` +viewmodel.totalEndDayField+`0`}"
+        android:textSize="14sp"
+        android:textColor="@color/cool_green"
+        tools:text="KES 24,000.00"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/textView15" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="10dp"
+        app:layout_goneMarginEnd="10dp"
+        android:layout_marginEnd="20dp"
+        app:setAdapter="@{viewmodel.endDayAdapter}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view4"
+        tools:listitem="@layout/revenue_item" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/view4"
+        app:layout_constraintTop_toTopOf="@+id/textView13"
+        app:srcCompat="@drawable/calender" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

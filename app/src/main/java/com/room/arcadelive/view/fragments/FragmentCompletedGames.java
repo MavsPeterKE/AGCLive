@@ -63,7 +63,7 @@ public class FragmentCompletedGames extends DaggerFragment {
         String monthString  = (String) DateFormat.format("MMM",  todayDate); // Jun
         String year         = (String) DateFormat.format("yyyy", todayDate); // 2013
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("juja_cross_roads")
+        DatabaseReference myRef = database.getReference(Constants.DEFAULT_USER)
                 .child("gamelogs")
                 .child("all-completed-Games")
                 .child(monthString+"_"+year)

@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.room.arcadelive.R;
 import com.room.arcadelive.databinding.FragmentLiveGamesBinding;
 import com.room.arcadelive.models.ScreenFirebaseModel;
+import com.room.arcadelive.utils.Constants;
 import com.room.arcadelive.utils.ViewModelFactory;
 import com.room.arcadelive.view.adapters.LiveGamesAdapter;
 import com.room.arcadelive.viewmodels.LiveGamesViewModel;
@@ -51,7 +52,7 @@ public class FragmentLiveGames extends DaggerFragment {
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("juja_cross_roads").child("gamelogs").child("all-active-games");
+        DatabaseReference myRef = database.getReference(Constants.DEFAULT_USER).child("gamelogs").child("all-active-games");
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {

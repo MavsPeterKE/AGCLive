@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_black"
+    tools:context=".view.activity.MainActivity">
+
+    <EditText
+        android:id="@+id/edExpenseAmount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/white"
+        android:layout_marginTop="36dp"
+        android:hint="Amount"
+        android:ems="10"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        android:textColor="#424242"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.565"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editExpDesc"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textPersonName"
+        android:paddingStart="10dp"
+        android:textColor="#424242"
+        app:layout_constraintEnd_toEndOf="@+id/edExpenseAmount"
+        app:layout_constraintStart_toStartOf="@+id/edExpenseAmount"
+        app:layout_constraintTop_toBottomOf="@+id/edExpenseAmount" />
+
+    <Button
+        android:id="@+id/btCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/holo_red_dark"
+        android:text="Cancel"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/editExpDesc"
+        app:layout_constraintTop_toBottomOf="@+id/editExpDesc" />
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/cool_green"
+        android:text="Save"
+        android:layout_marginStart="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/editExpDesc"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/editExpDesc" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="220dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
