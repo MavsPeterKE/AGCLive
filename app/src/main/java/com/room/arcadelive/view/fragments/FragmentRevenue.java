@@ -23,10 +23,10 @@ import com.room.arcadelive.models.Expense;
 import com.room.arcadelive.utils.Constants;
 import com.room.arcadelive.utils.Utils;
 import com.room.arcadelive.utils.ViewModelFactory;
-import com.room.arcadelive.viewmodels.EndDayViewModel;
 import com.room.arcadelive.viewmodels.RevenueViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class FragmentRevenue extends DaggerFragment {
     FragmentRevenueBinding fragmentRevenueBinding;
     RevenueViewModel viewModel;
     private double totalSales = 0.0;
-    private double totalExpenses = 0.0;
+    private double totalExpenses;
 
 
     @Override
@@ -56,33 +56,44 @@ public class FragmentRevenue extends DaggerFragment {
         fragmentRevenueBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_revenue, container, false);
         fragmentRevenueBinding.setViewmodel(viewModel);
         fragmentRevenueBinding.executePendingBindings();
-        observeEndDays();
-        observeExpenses();
+        observeRevenueData();
         return fragmentRevenueBinding.getRoot();
     }
 
-    private void observeEndDays() {
+    private void observeRevenueData() {
         Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT), Constants.DATE_FORMAT);
         String monthString = (String) DateFormat.format("MMM", todayDate); // Jun
         String year = (String) DateFormat.format("yyyy", todayDate); // 2013
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String salesPeriod = monthString + "_" + year;
         DatabaseReference myRef = database.getReference(Constants.DEFAULT_USER)
-                .child("gamelogs")
-                .child("-all-end-days")
-                .child(monthString + "_" + year);
+                .child("gamelogs");
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                DataSnapshot endDaysSnapshot = dataSnapshot.child("-all-end-days").child(salesPeriod);
+                DataSnapshot expenseDataSnapshot = dataSnapshot.child("expenses").child(salesPeriod);
                 List<EndDayModel> endDayModelList = new ArrayList<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    EndDayModel model = snapshot.getValue(EndDayModel.class);
-                    totalSales+=Double.parseDouble(model.totalSales);
-                    endDayModelList.add(model);
+                for (DataSnapshot snapshot : endDaysSnapshot.getChildren()) {
+                    endDayModelList.add(snapshot.getValue(EndDayModel.class));
+                    calculateTotalSales(endDayModelList);
                 }
-                viewModel.setEndDayList(endDayModelList);
+
+                List<Expense> expenseList = new ArrayList<>();
+                for (DataSnapshot snapshot : expenseDataSnapshot.getChildren()) {
+                    expenseList.add( snapshot.getValue(Expense.class));
+                    calculateTotalExpenses(expenseList);
+                }
+
+                viewModel.totalExpensesField.set(totalExpenses);
                 viewModel.totalEndDayField.set(totalSales);
+                viewModel.revenueField.set(totalSales-totalExpenses);
+                Collections.sort(endDayModelList, (endDayModel, t1) -> Double.compare(t1.date, endDayModel.date));
+                viewModel.setEndDayList(endDayModelList);
+
             }
 
             @Override
@@ -94,36 +105,19 @@ public class FragmentRevenue extends DaggerFragment {
         });
     }
 
-    private void observeExpenses() {
-        Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT), Constants.DATE_FORMAT);
-        String monthString = (String) DateFormat.format("MMM", todayDate); // Jun
-        String year = (String) DateFormat.format("yyyy", todayDate); // 2013
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(Constants.DEFAULT_USER)
-                .child("gamelogs")
-                .child("expenses")
-                .child(monthString + "_" + year);
+    private void calculateTotalSales(List<EndDayModel> endDayModelList) {
+        double amount = 0.00;
+        for (EndDayModel endDayModel :endDayModelList){
+            amount+=Double.parseDouble(endDayModel.totalSales);
+        }
+        totalSales = amount;
+    }
 
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Expense expense = snapshot.getValue(Expense.class);
-                    totalExpenses+=expense.amount;
-                }
-                viewModel.totalExpensesField.set(totalExpenses);
-                double totalRevenue = totalSales-totalExpenses;
-                viewModel.revenueField.set(totalRevenue);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                int x = 0;
-                // Failed to read value
-                // Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+    private void calculateTotalExpenses(List<Expense> expenseList) {
+        double total = 0;
+        for (Expense expense:expenseList){
+            total+=expense.amount;
+        }
+        totalExpenses = total;
     }
 }

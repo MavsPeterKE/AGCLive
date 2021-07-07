@@ -55,7 +55,7 @@ public class FragmentExpense extends DaggerFragment {
         fragmentExpenseBinding.executePendingBindings();
 
         fragmentExpenseBinding.btAdd.setOnClickListener(view -> {
-            ((HomeActivity) getActivity()).changeFragment(new FragmentAddExpense(), FragmentAddExpense.class.getSimpleName());
+            ((HomeActivity) getActivity()).createFragments(new FragmentAddExpense());
         });
         observeExpenses();
         return fragmentExpenseBinding.getRoot();
@@ -93,16 +93,16 @@ public class FragmentExpense extends DaggerFragment {
         });
     }
 
-    private void setTotalExpenseAmount(List<Expense> expenseList){
+    private void setTotalExpenseAmount(List<Expense> expenseList) {
         double amount = 0.00;
-        if (expenseList.isEmpty()){
+        if (expenseList.isEmpty()) {
             fragmentExpenseBinding.tvExpenseAmount.setText("KES 0.00");
-        }else {
-            for (Expense expense:expenseList){
-                amount+=expense.amount;
+        } else {
+            for (Expense expense : expenseList) {
+                amount += expense.amount;
             }
 
-            fragmentExpenseBinding.tvExpenseAmount.setText("KES - "+amount+"0");
+            fragmentExpenseBinding.tvExpenseAmount.setText("KES - " + amount + "0");
         }
     }
 }

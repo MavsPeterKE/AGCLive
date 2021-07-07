@@ -26,6 +26,7 @@ import com.room.arcadelive.utils.ViewModelFactory;
 import com.room.arcadelive.viewmodels.EndDayViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -56,8 +57,6 @@ public class FragmentEndDays extends DaggerFragment {
         fragmentEndDaysBinding.setViewmodel(viewModel);
         fragmentEndDaysBinding.executePendingBindings();
         observeEndDays();
-        //searchEoDByDate("2021-06-26");
-     //   orderByDate();
         return fragmentEndDaysBinding.getRoot();
     }
 
@@ -80,6 +79,8 @@ public class FragmentEndDays extends DaggerFragment {
                     EndDayModel model = snapshot.getValue(EndDayModel.class);
                     endDayModelList.add(model);
                 }
+
+                Collections.sort(endDayModelList, (endDayModel, t1) -> Double.compare(t1.date, endDayModel.date));
                 viewModel.setEndDayList(endDayModelList);
             }
 
@@ -101,7 +102,7 @@ public class FragmentEndDays extends DaggerFragment {
                 .child("gamelogs")
                 .child("-all-end-days")
                 .child(monthString + "_" + year)
-                .orderByChild("date").startAt(new Date().getTime()).addChildEventListener(new ChildEventListener() {
+                .orderByChild("date").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 List<EndDayModel> endDayModelList = new ArrayList<>();

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,31 +46,27 @@ public class FragmentAddExpense extends DaggerFragment {
         fragmentAddExpenseBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_expense, container, false);
         fragmentAddExpenseBinding.executePendingBindings();
 
-      /*  fragmentAddExpenseBinding.button.setOnClickListener(view -> {
-          //  ((HomeActivity)getActivity()).changeFragment();
-        });*/
+        fragmentAddExpenseBinding.btSave.setOnClickListener(view -> {
+            String amount = fragmentAddExpenseBinding.edExpenseAmount.getText().toString().trim();
+            String desc = fragmentAddExpenseBinding.editExpDesc.getText().toString().trim();
 
-        fragmentAddExpenseBinding.btSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String amount = fragmentAddExpenseBinding.edExpenseAmount.getText().toString().trim();
-                String desc = fragmentAddExpenseBinding.editExpDesc.getText().toString().trim();
-
-                if (amount.isEmpty()){
-                    fragmentAddExpenseBinding.edExpenseAmount.setError("Required");
-                }else  if (desc.isEmpty()){
-                    fragmentAddExpenseBinding.editExpDesc.setError("Required");
-                }else {
-                    Expense expense = new Expense();
-                    expense.amount = Double.parseDouble(amount);
-                    expense.description = desc;
-                    expense.user = "Peter";
-                    expense.date = new Date();
-
-                    new FirebaseLogs().setExpense(Utils.getTodayDate(Constants.DATE_FORMAT),"expenses",expense);
-                }
+            if (amount.isEmpty()){
+                fragmentAddExpenseBinding.edExpenseAmount.setError("Required");
+            }else  if (desc.isEmpty()){
+                fragmentAddExpenseBinding.editExpDesc.setError("Required");
+            }else {
+                Expense expense = new Expense();
+                expense.amount = Double.parseDouble(amount);
+                expense.description = desc;
+                expense.user = "Peter";
+                expense.date = new Date();
+                new FirebaseLogs().setExpense(Utils.getTodayDate(Constants.DATE_FORMAT),"expenses",expense);
+                Toast.makeText(getActivity(), "Expense Added Successfully", Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
             }
         });
+
+        fragmentAddExpenseBinding.btCancel.setOnClickListener(view -> getActivity().onBackPressed());
 
         return fragmentAddExpenseBinding.getRoot();
     }

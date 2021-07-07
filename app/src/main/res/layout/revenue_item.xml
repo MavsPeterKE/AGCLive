@@ -39,7 +39,7 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{`KES. ` +endDay.totalSales}"
+            android:text="@{`KES. ` +endDay.totalSales+`0`}"
             android:textColor="@color/green_progress"
             android:textSize="14sp"
             android:layout_marginEnd="16dp"

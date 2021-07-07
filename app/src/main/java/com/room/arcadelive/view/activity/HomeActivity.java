@@ -23,6 +23,8 @@ import butterknife.ButterKnife;
 public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.bottom_bar)
     BottomNavigationBar bottomNavigationBar;
+    Fragment fragment;
+    FragmentTransaction transaction;
 
 
     @Override
@@ -101,5 +103,26 @@ public class HomeActivity extends AppCompatActivity {
         fragmentTransaction.commitNowAllowingStateLoss();
     }
 
+    public void createFragments(Fragment fragment) {
+        this.fragment = fragment;
+        transaction = getSupportFragmentManager().beginTransaction();
+        //transaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+        transaction.add(R.id.frame_container, fragment);
+        transaction.addToBackStack(fragment.getClass().getSimpleName());
+        transaction.commit();
+    }
 
+    @Override
+    public void onBackPressed() {
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 0) {
+            finish();
+        } else {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                getSupportFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
+        }
+    }
 }
