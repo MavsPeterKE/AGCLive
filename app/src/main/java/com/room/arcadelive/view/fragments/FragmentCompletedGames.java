@@ -59,14 +59,11 @@ public class FragmentCompletedGames extends DaggerFragment {
     }
 
     private void observeCompletedGames() {
-        Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT),Constants.DATE_FORMAT);
-        String monthString  = (String) DateFormat.format("MMM",  todayDate); // Jun
-        String year         = (String) DateFormat.format("yyyy", todayDate); // 2013
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(Constants.DEFAULT_USER)
                 .child("gamelogs")
                 .child("all-completed-Games")
-                .child(monthString+"_"+year)
+                .child(Utils.getCurrentMonthYear())
                 .child(Utils.getTodayDate(Constants.DATE_FORMAT));
 
         // Read from the database

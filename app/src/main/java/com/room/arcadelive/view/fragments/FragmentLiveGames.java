@@ -24,6 +24,8 @@ import com.room.arcadelive.view.adapters.LiveGamesAdapter;
 import com.room.arcadelive.viewmodels.LiveGamesViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -62,6 +64,8 @@ public class FragmentLiveGames extends DaggerFragment {
                 for(DataSnapshot screenView : dataSnapshot.getChildren()) {
                    screenFirebaseModels.add(screenView.getValue(ScreenFirebaseModel.class));
                 }
+                Collections.sort(screenFirebaseModels, (screenFirebaseModel, t1) ->
+                        Integer.compare(t1.screen.active?1:0,screenFirebaseModel.screen.active?1:0));
                 viewModel.setScreenList(screenFirebaseModels);
             }
 

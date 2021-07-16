@@ -1,7 +1,6 @@
 package com.room.arcadelive.view.fragments;
 
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.github.dewinjm.monthyearpicker.MonthYearPickerDialogFragment;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,14 +26,17 @@ import com.room.arcadelive.utils.Utils;
 import com.room.arcadelive.utils.ViewModelFactory;
 import com.room.arcadelive.viewmodels.RevenueViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
+
+import static com.room.arcadelive.utils.Utils.getCurrentMonthYear;
 
 
 public class FragmentRevenue extends DaggerFragment {
@@ -47,6 +51,8 @@ public class FragmentRevenue extends DaggerFragment {
     RevenueViewModel viewModel;
     private double totalSales = 0.0;
     private double totalExpenses;
+    private MonthYearPickerDialogFragment dialogFragment;
+    private String searchPeriod = "";
 
 
     @Override
@@ -56,16 +62,28 @@ public class FragmentRevenue extends DaggerFragment {
         fragmentRevenueBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_revenue, container, false);
         fragmentRevenueBinding.setViewmodel(viewModel);
         fragmentRevenueBinding.executePendingBindings();
+
+        fragmentRevenueBinding.calender.setOnClickListener(view -> {
+            dialogFragment = MonthYearPickerDialogFragment
+                    .getInstance(1, 2021, "Sales Period");
+            dialogFragment.show(getActivity().getSupportFragmentManager(), null);
+
+            dialogFragment.setOnDateSetListener((year, monthOfYear) -> {
+                searchPeriod = Utils.getMonthAbbr(monthOfYear) + "_" + year;
+                observeRevenueEndDayByMonth(Utils.getMonthAbbr(monthOfYear),year);
+                observeRevenueExpenseByMonth();
+            });
+        });
+
+
         observeRevenueData();
+
         return fragmentRevenueBinding.getRoot();
     }
 
     private void observeRevenueData() {
-        Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT), Constants.DATE_FORMAT);
-        String monthString = (String) DateFormat.format("MMM", todayDate); // Jun
-        String year = (String) DateFormat.format("yyyy", todayDate); // 2013
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        String salesPeriod = monthString + "_" + year;
+        String salesPeriod = getCurrentMonthYear();
         DatabaseReference myRef = database.getReference(Constants.DEFAULT_USER)
                 .child("gamelogs");
 
@@ -73,7 +91,6 @@ public class FragmentRevenue extends DaggerFragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 DataSnapshot endDaysSnapshot = dataSnapshot.child("-all-end-days").child(salesPeriod);
                 DataSnapshot expenseDataSnapshot = dataSnapshot.child("expenses").child(salesPeriod);
                 List<EndDayModel> endDayModelList = new ArrayList<>();
@@ -84,13 +101,11 @@ public class FragmentRevenue extends DaggerFragment {
 
                 List<Expense> expenseList = new ArrayList<>();
                 for (DataSnapshot snapshot : expenseDataSnapshot.getChildren()) {
-                    expenseList.add( snapshot.getValue(Expense.class));
+                    expenseList.add(snapshot.getValue(Expense.class));
                     calculateTotalExpenses(expenseList);
                 }
 
-                viewModel.totalExpensesField.set(totalExpenses);
-                viewModel.totalEndDayField.set(totalSales);
-                viewModel.revenueField.set(totalSales-totalExpenses);
+                setRevenueValues();
                 Collections.sort(endDayModelList, (endDayModel, t1) -> Double.compare(t1.date, endDayModel.date));
                 viewModel.setEndDayList(endDayModelList);
 
@@ -98,26 +113,117 @@ public class FragmentRevenue extends DaggerFragment {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                int x = 0;
-                // Failed to read value
-                // Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
     }
 
+    private void observeRevenueEndDayByMonth(String month, int year) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference(Constants.DEFAULT_USER)
+                .child("gamelogs")
+                .child("-all-end-days")
+                .orderByKey().equalTo(searchPeriod).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                List<EndDayModel> endDayModelList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    endDayModelList.add(dataSnapshot.getValue(EndDayModel.class));
+                    calculateTotalSales(endDayModelList);
+                }
+
+                fragmentRevenueBinding.tvRevenueTitle.setText(
+                        searchPeriod.equals(getCurrentMonthYear())?"Total Revenue":
+                                "Total Revenue for "+month+" "+year);
+
+                Collections.sort(endDayModelList, (endDayModel, t1) -> Double.compare(t1.date, endDayModel.date));
+                viewModel.setEndDayList(endDayModelList);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void observeRevenueExpenseByMonth() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference(Constants.DEFAULT_USER)
+                .child("gamelogs")
+                .child("expenses")
+                .orderByKey().equalTo(searchPeriod).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull @NotNull DataSnapshot expenseDataSnapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                List<Expense> expenseList = new ArrayList<>();
+                for (DataSnapshot snapshot : expenseDataSnapshot.getChildren()) {
+                    expenseList.add(snapshot.getValue(Expense.class));
+                    calculateTotalExpenses(expenseList);
+                }
+
+                setRevenueValues();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void setRevenueValues() {
+        viewModel.totalExpensesField.set(totalExpenses);
+        viewModel.totalEndDayField.set(totalSales);
+        viewModel.revenueField.set(totalSales - totalExpenses);
+    }
+
     private void calculateTotalSales(List<EndDayModel> endDayModelList) {
         double amount = 0.00;
-        for (EndDayModel endDayModel :endDayModelList){
-            amount+=Double.parseDouble(endDayModel.totalSales);
+        for (EndDayModel endDayModel : endDayModelList) {
+            amount += Double.parseDouble(endDayModel.totalSales);
         }
         totalSales = amount;
     }
 
     private void calculateTotalExpenses(List<Expense> expenseList) {
         double total = 0;
-        for (Expense expense:expenseList){
-            total+=expense.amount;
+        for (Expense expense : expenseList) {
+            total += expense.amount;
         }
         totalExpenses = total;
     }
+
+    private void showMonthSelect() {
+
+    }
+
+
 }

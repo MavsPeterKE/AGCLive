@@ -7,9 +7,11 @@ public class Constants {
     public static final String  DATE_FORMAT = "yyyy-MM-dd";
     public static final int DATE_INDEX = 0;
     public static final int TIME_INDEX = 1;
-    public static final String DEFAULT_USER = "juja_cross_roads";
+    public static final String DEFAULT_USER = "juja_cross_roads_test";
     public static final String MPESA_DEPOSIT_REGEX = "^(\\w+\\s+\\d+\\.\\d+)(\\s+\\w+\\s\\w+\\s+\\w+\\s+\\w+\\s+\\w+\\s+\\d+\\s+\\w+\\s+\\w+\\s+\\d+\\s+\\w+\\s+\\w+\\s+\\w+\\s+\\w+\\s+)(\\d+\\/\\d+\\/+\\d+)\\s\\w+\\s+(\\d+\\:\\d+\\s+\\w+)\\.\\s+\\w+\\-\\w+\\s+\\w+\\s+(\\w+)";
     public static final String DEFAULT_FIREBASE_TABLE = "juja_cross_roads";
+    public static final int YEAR_SELECTED = 2021;
+    public static final int _SELECTED = 2021;
 
 
     public static final class Events{

@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@{screen.screen.active?`Active`:`Off`}"
-            android:textColor="@color/white"
+            android:textColor="@{screen.screen.active?@color/green_progress:@color/light_white}"
             android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="@+id/textView6"

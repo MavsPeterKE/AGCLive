@@ -1,5 +1,7 @@
 package com.room.arcadelive.utils;
 
+import android.text.format.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,7 +35,7 @@ public class Utils {
         return duration;
     }
 
-    public static Date convertToDate(String dateString,String format) {
+    public static Date convertToDate(String dateString, String format) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
             return simpleDateFormat.parse(dateString);
@@ -50,11 +52,24 @@ public class Utils {
 
     public static String getRandomId() {
         String randomId = "";
-        try{
+        try {
             randomId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return randomId;
+    }
+
+    public static String getMonthAbbr(int monthOfYear) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.MONTH, monthOfYear);
+        return new SimpleDateFormat("LLL").format(c.getTime());
+    }
+
+    public static String getCurrentMonthYear() {
+        Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT), Constants.DATE_FORMAT);
+        String monthString = (String) DateFormat.format("MMM", todayDate); // Jun
+        String year = (String) DateFormat.format("yyyy", todayDate); // 2013
+        return monthString + "_" + year;
     }
 }

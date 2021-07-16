@@ -32,9 +32,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView13"
-        android:layout_width="93dp"
-        android:layout_height="15dp"
+        android:id="@+id/tvRevenueTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:text="Total Revenue"
@@ -52,8 +52,8 @@
         android:textColor="@color/green_progress"
         android:textSize="28dp"
         tools:text="KES 24,000.00"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintStart_toStartOf="@+id/tvRevenueTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvRevenueTitle" />
 
     <TextView
         android:id="@+id/textView15"
@@ -96,7 +96,7 @@
         android:textSize="14sp"
         android:textColor="@color/cool_green"
         tools:text="KES 24,000.00"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/calender"
         app:layout_constraintTop_toTopOf="@+id/textView15" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -115,12 +115,12 @@
         tools:listitem="@layout/revenue_item" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/calender"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="@+id/view4"
-        app:layout_constraintTop_toTopOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/tvRevenueTitle"
         app:srcCompat="@drawable/calender" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

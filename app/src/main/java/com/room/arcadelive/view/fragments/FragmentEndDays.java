@@ -61,14 +61,11 @@ public class FragmentEndDays extends DaggerFragment {
     }
 
     private void observeEndDays() {
-        Date todayDate = Utils.convertToDate(Utils.getTodayDate(Constants.DATE_FORMAT), Constants.DATE_FORMAT);
-        String monthString = (String) DateFormat.format("MMM", todayDate); // Jun
-        String year = (String) DateFormat.format("yyyy", todayDate); // 2013
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(Constants.DEFAULT_USER)
                 .child("gamelogs")
                 .child("-all-end-days")
-                .child(monthString + "_" + year);
+                .child(Utils.getCurrentMonthYear());
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
