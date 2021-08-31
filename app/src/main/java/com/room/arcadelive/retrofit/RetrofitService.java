@@ -1,15 +1,17 @@
 package com.room.arcadelive.retrofit;
 
 
+import com.room.arcadelive.retrofit.responseStructures.LoginStructure;
+
+import java.util.HashMap;
+
+import io.reactivex.Single;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
 public interface RetrofitService {
 
-/*    @GET("api/v1/screens/")
-    Single<APIListResponse<ScreenStructure>> getScreens();
-
-    @GET("api/v1/games/")
-    Single<APIListResponse<GameStructure>> getGames();
-
     @POST("o/token/")
-    Single<LoginStructure> login(@Body HashMap<String,Object> params);*/
+    Single<LoginStructure> login(@Body HashMap<String, Object> params);
 
 }

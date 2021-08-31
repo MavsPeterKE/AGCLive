@@ -1,17 +1,21 @@
 package com.room.arcadelive.utils;
 
 public class Constants {
-    public static final String BASE_URL   = "https://cb6ab91bd55e.ngrok.io/";
+    public static final String BASE_URL   = "https://ba7c-41-90-40-28.ngrok.io/";
     public static final String SUCCESS = "success";
     public static final String  GENERIC_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String  DATE_FORMAT = "yyyy-MM-dd";
     public static final int DATE_INDEX = 0;
     public static final int TIME_INDEX = 1;
-    public static final String DEFAULT_USER = "juja_cross_roads_test";
+    public static final String DEFAULT_USER = "juja_cross_roads";
     public static final String MPESA_DEPOSIT_REGEX = "^(\\w+\\s+\\d+\\.\\d+)(\\s+\\w+\\s\\w+\\s+\\w+\\s+\\w+\\s+\\w+\\s+\\d+\\s+\\w+\\s+\\w+\\s+\\d+\\s+\\w+\\s+\\w+\\s+\\w+\\s+\\w+\\s+)(\\d+\\/\\d+\\/+\\d+)\\s\\w+\\s+(\\d+\\:\\d+\\s+\\w+)\\.\\s+\\w+\\-\\w+\\s+\\w+\\s+(\\w+)";
-    public static final String DEFAULT_FIREBASE_TABLE = "juja_cross_roads";
     public static final int YEAR_SELECTED = 2021;
     public static final int _SELECTED = 2021;
+
+    public static String getBaseUrl() {
+        String url = Prefs.getString(PrefsKeys.BASE_URL);
+        return url.equals("") ? BASE_URL : url;
+    }
 
 
     public static final class Events{
@@ -45,5 +49,6 @@ public class Constants {
         public static final String PASSWORD_ERROR = "Password Required ";
         public static final String ACCESS_TOKEN = "access_token";
         public static final String CURRENT_DATE = "date" ;
+        public static final String BASE_URL = "base_url" ;
     }
 }

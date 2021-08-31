@@ -1,5 +1,7 @@
 package com.room.arcadelive.utils;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.text.format.DateFormat;
 
 import java.text.ParseException;
@@ -71,5 +73,16 @@ public class Utils {
         String monthString = (String) DateFormat.format("MMM", todayDate); // Jun
         String year = (String) DateFormat.format("yyyy", todayDate); // 2013
         return monthString + "_" + year;
+    }
+
+    public static PackageInfo getPackageInfo(Context context) {
+        PackageInfo pInfo = null;
+        try {
+            pInfo = context.getPackageManager().getPackageInfo(context.getPackageName
+                    (), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pInfo;
     }
 }

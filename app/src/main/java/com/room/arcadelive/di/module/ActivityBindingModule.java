@@ -1,5 +1,6 @@
 package com.room.arcadelive.di.module;
 
+import com.room.arcadelive.view.activity.LoginActivity;
 import com.room.arcadelive.view.activity.MainActivity;
 
 import dagger.Module;
@@ -9,5 +10,8 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class ActivityBindingModule {
     @ContributesAndroidInjector
     abstract MainActivity bindMainActivity();
+
+    @ContributesAndroidInjector
+    abstract LoginActivity bindLoginActivity();
 
 }

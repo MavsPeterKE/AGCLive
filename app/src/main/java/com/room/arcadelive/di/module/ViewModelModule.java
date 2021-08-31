@@ -9,6 +9,7 @@ import com.room.arcadelive.viewmodels.EndDayViewModel;
 import com.room.arcadelive.viewmodels.ExpenseViewModel;
 import com.room.arcadelive.viewmodels.HomeViewModel;
 import com.room.arcadelive.viewmodels.LiveGamesViewModel;
+import com.room.arcadelive.viewmodels.LoginViewModel;
 import com.room.arcadelive.viewmodels.RevenueViewModel;
 
 import dagger.Binds;
@@ -53,5 +54,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(RevenueViewModel.class)
     abstract ViewModel bindRevenueViewModel(RevenueViewModel revenueViewModel);
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel.class)
+    abstract ViewModel bindLoginViewModel(LoginViewModel loginViewModel);
 
 }
