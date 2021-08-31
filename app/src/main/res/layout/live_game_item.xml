@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:visibility="@{screen.screen.active?View.VISIBLE:View.GONE}"
-            android:text="@{screen.gameCount.gamesCount+` Games Played`}"
+            android:text="@{screen.totalGameCount+` Games Played`}"
             android:textColor="@color/light_white"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@+id/view2"

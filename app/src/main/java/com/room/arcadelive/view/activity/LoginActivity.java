@@ -73,6 +73,7 @@ public class LoginActivity extends DaggerAppCompatActivity {
                 R.layout.activity_login);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(LoginViewModel.class);
         activityLoginBinding.setViewmodel(viewModel);
+        getSupportActionBar().hide();
         viewModel.clickEventsLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String action) {
