@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@{screen.screen.active?`Active`:`Off`}"
@@ -53,11 +53,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"
             android:text="@{`KES. ` +screen.payableAmount +`0`}"
-            android:textSize="13sp"
             android:textColor="@color/green_progress"
+            android:textSize="13sp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="@+id/textView7"
-            tools:text="KES. 80.00"/>
+            tools:text="KES. 80.00" />
 
         <TextView
             android:id="@+id/textView3"

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import com.room.arcadelive.di.util.ViewModelKey;
 import com.room.arcadelive.viewmodels.AddExpenseViewModel;
 import com.room.arcadelive.viewmodels.CompletedGamesViewModel;
+import com.room.arcadelive.viewmodels.CustomersViewModel;
 import com.room.arcadelive.viewmodels.EndDayViewModel;
 import com.room.arcadelive.viewmodels.ExpenseViewModel;
 import com.room.arcadelive.viewmodels.HomeViewModel;
@@ -60,5 +61,10 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LoginViewModel.class)
     abstract ViewModel bindLoginViewModel(LoginViewModel loginViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CustomersViewModel.class)
+    abstract ViewModel bindCustomersViewModel(CustomersViewModel customersViewModel);
 
 }

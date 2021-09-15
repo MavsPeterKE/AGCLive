@@ -3,6 +3,7 @@ package com.room.arcadelive.di.module;
 
 import com.room.arcadelive.view.fragments.FragmentAddExpense;
 import com.room.arcadelive.view.fragments.FragmentCompletedGames;
+import com.room.arcadelive.view.fragments.FragmentCustomers;
 import com.room.arcadelive.view.fragments.FragmentExpense;
 import com.room.arcadelive.view.fragments.FragmentHome;
 import com.room.arcadelive.view.fragments.FragmentLiveGames;
@@ -34,6 +35,9 @@ public abstract class FragmentBindingModule {
     abstract FragmentAddExpense bindFragmentAddExpense();
 
     @ContributesAndroidInjector
-    abstract FragmentRevenue bindFFragmentRevenue();
+    abstract FragmentRevenue bindFragmentRevenue();
+
+    @ContributesAndroidInjector
+    abstract FragmentCustomers bindFragmentCustomers();
 
 }

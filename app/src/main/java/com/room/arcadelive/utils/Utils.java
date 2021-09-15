@@ -85,4 +85,11 @@ public class Utils {
         }
         return pInfo;
     }
+
+
+    public static int getCurrentWeekCount(String dateString) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(Utils.convertToDate(dateString, Constants.DATE_FORMAT));
+        return cal.get(Calendar.WEEK_OF_MONTH);
+    }
 }

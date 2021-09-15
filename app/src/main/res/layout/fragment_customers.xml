@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="model"
+            type="com.room.arcadelive.viewmodels.CustomersViewModel" />
+    </data>
+
+
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:background="@color/light_black"
+       android:layout_height="match_parent">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:background="@color/light_black"
+           tools:context=".view.activity.MainActivity">
+
+           <View
+               android:id="@+id/view4"
+               android:layout_width="match_parent"
+               android:layout_height="160dp"
+               android:layout_marginStart="16dp"
+               android:layout_marginEnd="16dp"
+               android:background="@drawable/rounded_rectangular_border"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               android:layout_marginTop="20dp"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/textView21"
+               app:layout_goneMarginTop="16dp" />
+
+           <TextView
+               android:id="@+id/tvRevenueTitle"
+               android:layout_width="wrap_content"
+               android:layout_height="18dp"
+               android:layout_marginStart="20dp"
+               android:layout_marginTop="16dp"
+               android:text="All Gamers"
+               android:textSize="14sp"
+               android:textColor="@color/white"
+               app:layout_constraintStart_toStartOf="@+id/view4"
+               app:layout_constraintTop_toTopOf="@+id/view4" />
+
+           <TextView
+               android:id="@+id/textView14"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="12dp"
+               android:textColor="@color/green_progress"
+               android:textSize="28dp"
+               tools:text="35 Gamers"
+               app:layout_constraintStart_toStartOf="@+id/tvRevenueTitle"
+               app:layout_constraintTop_toBottomOf="@+id/tvRevenueTitle" />
+
+           <TextView
+               android:id="@+id/textView19"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="12dp"
+               android:textColor="@color/green_progress"
+               android:textSize="28dp"
+               app:layout_constraintStart_toStartOf="@+id/tvRevenueTitle"
+               app:layout_constraintTop_toBottomOf="@+id/tvRevenueTitle"
+               tools:text="35 Gamers" />
+
+           <TextView
+               android:id="@+id/textView22"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="12dp"
+               android:textColor="@color/cool_green"
+               android:text="@{model.customerMetricObservableField.allGamersCount}"
+               android:textSize="28dp"
+               app:layout_constraintStart_toStartOf="@+id/tvRevenueTitle"
+               app:layout_constraintTop_toBottomOf="@+id/tvRevenueTitle"
+               tools:text="35 Gamers" />
+
+           <TextView
+               android:id="@+id/textView15"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="12dp"
+               android:text="Loyal Returning Gamers"
+               android:textSize="14sp"
+               android:textColor="@color/light_white"
+               app:layout_constraintStart_toStartOf="@+id/textView14"
+               app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+           <TextView
+               android:id="@+id/textView16"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="12dp"
+               android:text="New Gamers"
+               android:textSize="14sp"
+               android:textColor="@color/light_white"
+               app:layout_constraintStart_toStartOf="@+id/textView15"
+               app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+           <TextView
+               android:id="@+id/textView17"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="14sp"
+               android:textColor="@color/cool_green"
+               tools:text="3"
+               android:text="@{model.customerMetricObservableField.newGamersCount}"
+               app:layout_constraintEnd_toEndOf="@+id/textView18"
+               app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+           <TextView
+               android:id="@+id/textView18"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textColor="@color/cool_green"
+               android:textSize="14sp"
+               android:text="@{model.customerMetricObservableField.loyalGamesCount}"
+               app:layout_constraintEnd_toEndOf="@+id/view4"
+               app:layout_constraintTop_toTopOf="@+id/textView15"
+               android:layout_marginEnd="16dp"
+               tools:text="2" />
+
+           <View
+               android:id="@+id/view5"
+               android:layout_width="match_parent"
+               android:layout_height="150dp"
+               android:layout_marginStart="16dp"
+               android:layout_marginTop="20dp"
+               android:layout_marginEnd="16dp"
+               android:background="@drawable/rounded_rectangular_border"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/view4"
+               app:layout_goneMarginTop="16dp" />
+
+           <View
+               android:id="@+id/view7"
+               android:layout_width="match_parent"
+               android:layout_height="150dp"
+               android:layout_marginStart="16dp"
+               android:layout_marginTop="20dp"
+               android:layout_marginEnd="16dp"
+               android:background="@drawable/rounded_rectangular_border"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="1.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/view5"
+               app:layout_goneMarginTop="16dp" />
+
+           <TextView
+               android:id="@+id/textView20"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:padding="5dp"
+               android:text="Gamers Insights \nTraffic Data"
+               android:textColor="@color/white"
+               android:layout_marginTop="20dp"
+               android:layout_marginStart="16dp"
+               android:textSize="24sp"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent" />
+
+           <TextView
+               android:id="@+id/textView21"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="8dp"
+               android:layout_marginTop="10dp"
+               android:text="Updated Customer data  on every visit"
+               android:textColor="@color/light_white"
+               app:layout_constraintStart_toStartOf="@+id/textView20"
+               app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+           <TextView
+               android:id="@+id/textView23"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="16dp"
+               android:text="@{model.customerMetricObservableField.zeroMonthVisitGamersCount}"
+               tools:text="14 Gamers"
+               android:textColor="@color/holo_red_dark"
+               android:layout_marginTop="12dp"
+               android:textSize="28sp"
+               app:layout_constraintStart_toStartOf="@+id/view7"
+               app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+           <TextView
+               android:id="@+id/textView24"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Zero Visit This month"
+               android:layout_marginTop="16dp"
+               android:textColor="@color/white"
+               app:layout_constraintStart_toStartOf="@+id/textView23"
+               app:layout_constraintTop_toTopOf="@+id/view7" />
+
+           <TextView
+               android:id="@+id/textView25"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Gamers This Month"
+               android:textColor="@color/white"
+               android:layout_marginTop="16dp"
+               android:layout_marginStart="16dp"
+               app:layout_constraintStart_toStartOf="@+id/view5"
+               app:layout_constraintTop_toTopOf="@+id/view5" />
+
+           <TextView
+               android:id="@+id/textView26"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="12dp"
+               android:text="@{model.customerMetricObservableField.gamersThisMonthCount}"
+               tools:text="30 Gamers"
+               android:textColor="@color/green_progress"
+               android:textSize="28dp"
+               app:layout_constraintStart_toStartOf="@+id/textView25"
+               app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+           <TextView
+               android:id="@+id/textView27"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Average Revenue Lost"
+               android:layout_marginTop="12dp"
+               android:textSize="14sp"
+               android:textColor="@color/white"
+               app:layout_constraintStart_toStartOf="@+id/textView23"
+               app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+           <TextView
+               android:id="@+id/textView28"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@{model.customerMetricObservableField.zeroMonthVisitAverageRevenue}"
+               android:textSize="16sp"
+               android:textColor="@color/holo_red_dark"
+               android:layout_marginEnd="16dp"
+               app:layout_constraintBottom_toBottomOf="@+id/textView27"
+               app:layout_constraintEnd_toEndOf="@+id/view7"
+               app:layout_constraintTop_toTopOf="@+id/textView27"
+               tools:text="Ksh. 2400.00"/>
+
+           <TextView
+               android:id="@+id/textView29"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="12dp"
+               android:textColor="@color/white"
+               android:textSize="14dp"
+               android:text="Gamers This Week"
+               app:layout_constraintStart_toStartOf="@+id/textView26"
+               app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+           <TextView
+               android:id="@+id/textView30"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="16sp"
+               android:text="@{model.customerMetricObservableField.WeekGamesCount}"
+               tools:text="13"
+               android:textColor="@color/white"
+               android:layout_marginEnd="16dp"
+               app:layout_constraintBottom_toBottomOf="@+id/textView29"
+               app:layout_constraintEnd_toEndOf="@+id/view5"
+               app:layout_constraintTop_toTopOf="@+id/textView29" />
+       </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.core.widget.NestedScrollView>
+
+</layout>

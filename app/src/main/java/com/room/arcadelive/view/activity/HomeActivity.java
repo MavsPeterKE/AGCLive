@@ -13,6 +13,7 @@ import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 import com.room.arcadelive.R;
+import com.room.arcadelive.view.fragments.FragmentCustomers;
 import com.room.arcadelive.view.fragments.FragmentExpense;
 import com.room.arcadelive.view.fragments.FragmentHome;
 import com.room.arcadelive.view.fragments.FragmentRevenue;
@@ -41,10 +42,10 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationBar.addTab(gameCountItem);
         BottomBarItem screenItem = new BottomBarItem(R.drawable.reduction, R.string.title_screen);
         bottomNavigationBar.addTab(screenItem);
-        /*BottomBarItem gamersData = new BottomBarItem(R.drawable.games, R.string.title_gamers);
-        bottomNavigationBar.addTab(gamersData);*/
         BottomBarItem eodItem = new BottomBarItem(R.drawable.cash_hand, R.string.title_eod);
         bottomNavigationBar.addTab(eodItem);
+        BottomBarItem gamersData = new BottomBarItem(R.drawable.customer, R.string.title_gamers);
+        bottomNavigationBar.addTab(gamersData);
 
         //Create Default Home View
         startHomeView();
@@ -61,11 +62,15 @@ public class HomeActivity extends AppCompatActivity {
                 case 2:
                       startRevenueFragment();
                     break;
-            /*    case 3:
-                    startEODFragment();
-                    break;*/
+                case 3:
+                    startCustomersFragment();
+                    break;
             }
         });
+    }
+
+    private void startCustomersFragment() {
+        changeFragment(new FragmentCustomers(),FragmentCustomers.class.getSimpleName());
     }
 
     private void startExpenseFragment() {

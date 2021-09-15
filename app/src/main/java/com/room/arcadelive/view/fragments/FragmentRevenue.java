@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,7 +51,7 @@ public class FragmentRevenue extends DaggerFragment {
     FragmentRevenueBinding fragmentRevenueBinding;
     RevenueViewModel viewModel;
     private double totalSales = 0.0;
-    private double totalExpenses;
+    private double totalExpenses = 0.0;
     private MonthYearPickerDialogFragment dialogFragment;
     private String searchPeriod = "";
 
@@ -71,7 +72,6 @@ public class FragmentRevenue extends DaggerFragment {
             dialogFragment.setOnDateSetListener((year, monthOfYear) -> {
                 searchPeriod = Utils.getMonthAbbr(monthOfYear) + "_" + year;
                 observeRevenueEndDayByMonth(Utils.getMonthAbbr(monthOfYear),year);
-                observeRevenueExpenseByMonth();
             });
         });
 
@@ -96,15 +96,14 @@ public class FragmentRevenue extends DaggerFragment {
                 List<EndDayModel> endDayModelList = new ArrayList<>();
                 for (DataSnapshot snapshot : endDaysSnapshot.getChildren()) {
                     endDayModelList.add(snapshot.getValue(EndDayModel.class));
-                    calculateTotalSales(endDayModelList);
                 }
+                calculateTotalSales(endDayModelList);
 
                 List<Expense> expenseList = new ArrayList<>();
                 for (DataSnapshot snapshot : expenseDataSnapshot.getChildren()) {
                     expenseList.add(snapshot.getValue(Expense.class));
-                    calculateTotalExpenses(expenseList);
                 }
-
+                calculateTotalExpenses(expenseList);
                 setRevenueValues();
                 Collections.sort(endDayModelList, (endDayModel, t1) -> Double.compare(t1.date, endDayModel.date));
                 viewModel.setEndDayList(endDayModelList);
@@ -128,15 +127,15 @@ public class FragmentRevenue extends DaggerFragment {
                 List<EndDayModel> endDayModelList = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     endDayModelList.add(dataSnapshot.getValue(EndDayModel.class));
-                    calculateTotalSales(endDayModelList);
                 }
-
+                calculateTotalSales(endDayModelList);
                 fragmentRevenueBinding.tvRevenueTitle.setText(
                         searchPeriod.equals(getCurrentMonthYear())?"Total Revenue":
                                 "Total Revenue for "+month+" "+year);
 
                 Collections.sort(endDayModelList, (endDayModel, t1) -> Double.compare(t1.date, endDayModel.date));
                 viewModel.setEndDayList(endDayModelList);
+                observeRevenueExpenseByMonth();
             }
 
             @Override
@@ -172,29 +171,29 @@ public class FragmentRevenue extends DaggerFragment {
                 List<Expense> expenseList = new ArrayList<>();
                 for (DataSnapshot snapshot : expenseDataSnapshot.getChildren()) {
                     expenseList.add(snapshot.getValue(Expense.class));
-                    calculateTotalExpenses(expenseList);
                 }
-
+                calculateTotalExpenses(expenseList);
                 setRevenueValues();
             }
 
             @Override
             public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                int x = 0;
             }
 
             @Override
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
-
+                int x = 0;
             }
 
             @Override
             public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
-
+                int x = 0;
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
+             int x = 0;
             }
         });
     }
