@@ -1,10 +1,10 @@
 package com.room.arcadelive.utils;
 
 public class Constants {
-    public static final String BASE_URL   = "https://0ace-41-90-63-220.ngrok.io/";
+    public static final String BASE_URL = "https://arcade-agc.herokuapp.com/";
     public static final String SUCCESS = "success";
-    public static final String  GENERIC_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static final String  DATE_FORMAT = "yyyy-MM-dd";
+    public static final String GENERIC_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final int DATE_INDEX = 0;
     public static final int TIME_INDEX = 1;
     public static final String DEFAULT_USER = "juja_cross_roads";
@@ -18,7 +18,7 @@ public class Constants {
     }
 
 
-    public static final class Events{
+    public static final class Events {
         public static final String GAME_ITEM_CLICK = "game_item";
         public static final String SCREEN_ITEM_CLICK = "game_item";
         public static final String BOTTOM_SHEET = "close_sheet";
@@ -27,9 +27,9 @@ public class Constants {
         public static final String CLOSE_ = "add";
         public static final String SYNC_GAME_DATA = "game_data_sync";
         public static final String START_GAME = "START GAME";
-        public static final String END_GAME =  "END GAME";
+        public static final String END_GAME = "END GAME";
         public static final String LOGIN = "login";
-        public static final String CLOSE_ERROR_SHEET = "close_error_sheet" ;
+        public static final String CLOSE_ERROR_SHEET = "close_error_sheet";
     }
 
     public static final class RoomConfigs {
@@ -48,7 +48,7 @@ public class Constants {
         public static final String LOGIN_SUCCESS = "login_success";
         public static final String PASSWORD_ERROR = "Password Required ";
         public static final String ACCESS_TOKEN = "access_token";
-        public static final String CURRENT_DATE = "date" ;
-        public static final String BASE_URL = "base_url" ;
+        public static final String CURRENT_DATE = "date";
+        public static final String BASE_URL = "base_url";
     }
 }
