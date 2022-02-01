@@ -65,7 +65,8 @@ public class FragmentEndDays extends DaggerFragment {
         DatabaseReference myRef = database.getReference(Constants.DEFAULT_USER)
                 .child("gamelogs")
                 .child("-all-end-days")
-                .child(Utils.getCurrentMonthYear());
+                .child("Oct_2021");
+                //.child(Utils.getCurrentMonthYear());
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
